@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function LoginContainer() {
+export default function LoginContent() {
     const navigate = useNavigate();
     return (
         <LoginPage>

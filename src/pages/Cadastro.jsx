@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import CadastroContainer from "../components/CadastroContainer";
+import CadastroContent from "../components/CadastroContent";
 
 export default function Cadastro() {
     return (
-        <CadastroContainer />
+        <CadastroContent />
     )
 }

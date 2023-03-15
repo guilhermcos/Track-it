@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import LoginPage from "../components/LoginPage"
+import LoginContent from "../components/LoginContent"
 
 export default function Login(){
     return (
-        <LoginPage />
+        <LoginContent />
     )
 }
