@@ -91,8 +91,15 @@ const ButtonsCreationCard = styled.div`
 `
 
 const DayButton = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: ${props => props.selecionado ? '#ffffff' : '#DBDBDB'};
     background-color: ${props => props.selecionado ? '#CFCFCF' : '#ffffff'};
+    min-height: 30px;
+    min-width: 30px;
+    max-width: 30px;
+    max-height: 30px;
     height: 30px;
     width: 30px;
     border-radius: 5px;
