@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginContainer() {
+    const navigate = useNavigate();
     return (
         <LoginPage>
             <img src="assets/logo.svg" alt="" />
             <form action="">
                 <input type="email" placeholder="email" />
                 <input type="password" placeholder="senha" />
-                <button type="submit">Entrar</button>
+                <button onClick={() => navigate("/habitos")} type="submit">Entrar</button>
             </form>
             <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
         </LoginPage>
@@ -54,7 +55,7 @@ const LoginPage = styled.div`
         border: none;
         border-radius: 5px;
         height: 45px;
-        width: 320px;
+        width: 303px;
         font-family: Lexend Deca;
         font-size: 21px;
         font-weight: 400;

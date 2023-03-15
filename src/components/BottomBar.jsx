@@ -1,14 +1,50 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import 'react-circular-progressbar/dist/styles.css'
 
 export default function BottomBar() {
+
+    const percentage = 60;
     return (
         <>
-        <NavBar>
-            <Link>Hábitos</Link>
-            <Link>Histórico</Link>
-        </NavBar>
-        <BotaoHoje><p>Hoje</p></BotaoHoje>
+            <NavBar>
+                <Link>Hábitos</Link>
+                <Link>Histórico</Link>
+            </NavBar>
+            <BotaoHoje>
+                <CircularProgressbar
+                    strokeWidth={10}
+                    styles={{
+                        root: {
+                            width: '90%',
+                        },
+                        path: {
+                            stroke: `rgba(255, 255, 255, ${percentage / 100})`,
+                            stroke: '#ffffff',
+                            
+                            strokeLinecap: 'round',
+                            transition: 'stroke-dashoffset 0.5s ease 0s',
+                            transformOrigin: 'center center',
+                        },
+                        trail: {
+                            stroke: '#52B6FF',
+                            strokeLinecap: 'butt',
+                            transform: 'rotate(0.25turn)',
+                            transformOrigin: 'center center',
+                        },
+                        text: {
+                            fontFamily: 'Lexend Deca',
+                            fill: '#ffffff',
+                            fontSize: '24px',
+                        },
+                        background: {
+                            fill: '#3e98c7',
+                        },
+                    }}
+                    value={percentage}
+                    text={`Hoje`} />
+            </BotaoHoje>
         </>
     )
 }
