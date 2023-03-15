@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function CadastroContainer(){
+export default function CadastroContainer() {
     return (
         <CadastroPage>
             <img src="assets/logo.svg" alt="" />
-            <input type="text" placeholder="email" />
-            <input type="text" placeholder="senha" />
-            <input type="text" placeholder="nome" />
-            <input type="text" placeholder="foto" />
-            <button type="submit">Entrar</button>
+            <form action="">
+                <input type="email" placeholder="email" required />
+                <input type="password" placeholder="senha" />
+                <input type="text" placeholder="nome" />
+                <input type="url" placeholder="foto" />
+                <button type="submit">Entrar</button>
+            </form>
             <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
         </CadastroPage>
     )
@@ -26,6 +28,11 @@ const CadastroPage = styled.div`
     img {
         margin-top: 68px;
         width: 180px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
     }
     input {
         border: 1px solid #D4D4D4;

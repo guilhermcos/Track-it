@@ -53,6 +53,7 @@ table {
 
 body {
     width: 100%;
+    background-color: #F2F2F2;
 }
 `;
 

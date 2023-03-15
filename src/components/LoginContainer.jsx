@@ -5,9 +5,11 @@ export default function LoginContainer() {
     return (
         <LoginPage>
             <img src="assets/logo.svg" alt="" />
-            <input type="text" placeholder="email" />
-            <input type="text" placeholder="senha" />
-            <button type="submit">Entrar</button>
+            <form action="">
+                <input type="email" placeholder="email" />
+                <input type="password" placeholder="senha" />
+                <button type="submit">Entrar</button>
+            </form>
             <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
         </LoginPage>
     )
@@ -24,6 +26,11 @@ const LoginPage = styled.div`
     img {
         margin-top: 68px;
         width: 180px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
     }
     input {
         border: 1px solid #D4D4D4;
