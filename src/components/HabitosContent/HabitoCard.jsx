@@ -24,7 +24,7 @@ export default function HabitoCard(props) {
 const StyledHabitoCard = styled.div`
     background-color: #ffffff;
     height: 91px;
-    width: 340px;
+    width: 90%;
     border-radius: 5px;
     display: flex;
     position: relative;
