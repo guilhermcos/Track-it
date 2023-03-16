@@ -50,6 +50,7 @@ export default function BottomBar() {
 }
 
 const BotaoHoje = styled.div`
+    z-index: 3;
     position: fixed;
     bottom: 0;
     left: calc(50% - 45px);
@@ -74,6 +75,7 @@ const BotaoHoje = styled.div`
 `
 
 const NavBar = styled.nav`
+    z-index: 2;
     background-color: #ffffff;
     position: fixed;
     left: 0;

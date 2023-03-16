@@ -10,6 +10,7 @@ export default function TopBar() {
 }
 
 const Topo = styled.header`
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: center;

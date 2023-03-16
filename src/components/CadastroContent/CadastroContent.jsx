@@ -1,22 +1,23 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
 
-export default function LoginContent() {
-    const navigate = useNavigate();
+export default function CadastroContent() {
     return (
-        <LoginPage>
+        <CadastroPage>
             <img src="assets/logo.svg" alt="" />
             <form action="">
-                <input type="email" placeholder="email" />
+                <input type="email" placeholder="email" required />
                 <input type="password" placeholder="senha" />
-                <button onClick={() => navigate("/habitos")} type="submit">Entrar</button>
+                <input type="text" placeholder="nome" />
+                <input type="url" placeholder="foto" />
+                <button type="submit">Entrar</button>
             </form>
-            <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
-        </LoginPage>
+            <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
+        </CadastroPage>
     )
 }
 
-const LoginPage = styled.div`
+const CadastroPage = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -25,7 +26,7 @@ const LoginPage = styled.div`
     background-color: #ffffff;
     width: 100%;
     img {
-        margin-top: 68px;
+        margin-top: 115px;
         width: 180px;
     }
     form {
@@ -55,7 +56,7 @@ const LoginPage = styled.div`
         border: none;
         border-radius: 5px;
         height: 45px;
-        width: 303px;
+        width: 320px;
         font-family: Lexend Deca;
         font-size: 21px;
         font-weight: 400;
