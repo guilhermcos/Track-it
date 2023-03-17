@@ -4,19 +4,20 @@ export default function HabitoCard(props) {
     const { daysCheckBox } = props;
 
     return (
-        <StyledHabitoCard>
-            <h3>Ler um capítulo do livro</h3>
+        <StyledHabitoCard data-test="habit-container" >
+            <h3 data-test="habit-name" >Ler um capítulo do livro</h3>
             <DaysCreationCard>
                 {daysCheckBox.map((day) => {
                     return (
                         <DayButton
-                            key={day.dayName}>
+                            key={day.dayName}
+                            data-test="habit-day">
                             {day.dayChar}
                         </DayButton>
                     )
                 })}
             </DaysCreationCard>
-            <img src="assets/trash-outline.svg" alt="" />
+            <img data-test="habit-delete-btn" src="assets/trash-outline.svg" alt="" />
         </StyledHabitoCard>
     )
 }

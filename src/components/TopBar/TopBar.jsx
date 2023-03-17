@@ -1,10 +1,14 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import { LoginContext } from "../../App";
 
 export default function TopBar() {
+    const userData = useContext(LoginContext);
+    console.log(userData);
     return (
-        <Topo>
+        <Topo data-test="header">
             <h1>TrackIt</h1>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStxcTLwEGJR-3ps1O11tPzhUKHRPKPIYDPtxBDnTEqd9jqzT5lXSINhrR_bG6FL1iHx5U&usqp=CAU" alt="" />
+            <img src={userData.image} alt="" />
         </Topo>
     )
 }

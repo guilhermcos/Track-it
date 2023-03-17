@@ -1,18 +1,51 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
+
+// https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStxcTLwEGJR-3ps1O11tPzhUKHRPKPIYDPtxBDnTEqd9jqzT5lXSINhrR_bG6FL1iHx5U&usqp=CAU
 
 export default function CadastroContent() {
+    const [nomeCadastro, setNomeCadastro] = useState("");
+    const [emailCadastro, setEmailCadastro] = useState("");
+    const [senhaCadastro, setSenhaCadastro] = useState("");
+    const [fotoCadastro, setFotoCadastro] = useState("");
+    const navigate = useNavigate();
+
+    function cadastrar(e) {
+        e.preventDefault();
+
+        const dadosCadastro = {
+            email: emailCadastro,
+            name: nomeCadastro,
+            image: fotoCadastro,
+            password: senhaCadastro
+        };
+
+        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
+        const promise = axios.post(URL, dadosCadastro);
+        promise.then((res) => {
+            console.log("sucesso");
+            console.log(res.data);
+            navigate("/");
+        });
+        promise.catch((err) => {
+            console.log("Erro");
+            console.log(err.response.data)
+        });
+    }
+
     return (
         <CadastroPage>
             <img src="assets/logo.svg" alt="" />
-            <form action="">
-                <input type="email" placeholder="email" required />
-                <input type="password" placeholder="senha" />
-                <input type="text" placeholder="nome" />
-                <input type="url" placeholder="foto" />
-                <button type="submit">Entrar</button>
+            <form onSubmit={cadastrar}>
+                <input data-test="email-input" onChange={(e) => setEmailCadastro(e.target.value)} type="email" placeholder="email" required />
+                <input data-test="password-input" onChange={(e) => setSenhaCadastro(e.target.value)} type="password" placeholder="senha" required />
+                <input data-test="user-name-input" onChange={(e) => setNomeCadastro(e.target.value)} type="text" placeholder="nome" required />
+                <input data-test="user-image-input" onChange={(e) => setFotoCadastro(e.target.value)} type="url" placeholder="foto" required />
+                <button data-test="signup-btn" type="submit">Entrar</button>
             </form>
-            <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
+            <Link data-test="login-link" to="/"><p>Já tem uma conta? Faça login!</p></Link>
         </CadastroPage>
     )
 }

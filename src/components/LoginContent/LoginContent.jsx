@@ -1,17 +1,42 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { createContext, useState } from "react";
+import axios from "axios";
 
-export default function LoginContent() {
+export default function LoginContent(props) {
+    const { loginData, setLoginData } = props;
     const navigate = useNavigate();
+    const [emailLogin, setEmailLogin] = useState("");
+    const [senhaLogin, setSenhaLogin] = useState("");
+
+    function login(e) {
+        e.preventDefault();
+
+        const dadosLogin = {
+            email: emailLogin,
+            password: senhaLogin
+        };
+
+        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
+        const promise = axios.post(URL, dadosLogin);
+        promise.then((res) => {
+            setLoginData(res.data);
+            navigate("/habitos");
+        });
+        promise.catch((err) => {
+            console.log(err.response.data);
+        });
+    }
+
     return (
         <LoginPage>
             <img src="assets/logo.svg" alt="" />
-            <form action="">
-                <input type="email" placeholder="email" />
-                <input type="password" placeholder="senha" />
-                <button onClick={() => navigate("/habitos")} type="submit">Entrar</button>
+            <form onSubmit={login}>
+                <input data-test="email-input" onChange={(e) => setEmailLogin(e.target.value)} type="email" placeholder="email" required />
+                <input data-test="password-input" onChange={(e) => setSenhaLogin(e.target.value)} type="password" placeholder="senha" required />
+                <button data-test="login-btn" type="submit">Entrar</button>
             </form>
-            <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
+            <Link data-test="signup-link" to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link>
         </LoginPage>
     )
 }

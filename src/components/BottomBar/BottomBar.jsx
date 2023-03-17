@@ -7,12 +7,12 @@ export default function BottomBar() {
 
     const percentage = 60;
     return (
-        <>
+        <div data-test="menu">
             <NavBar>
-                <Link>Hábitos</Link>
-                <Link>Histórico</Link>
+                <Link data-test="habit-link" >Hábitos</Link>
+                <Link data-test="history-link" >Histórico</Link>
             </NavBar>
-            <BotaoHoje>
+            <BotaoHoje data-test="today-link" >
                 <CircularProgressbar
                     strokeWidth={10}
                     styles={{
@@ -45,7 +45,7 @@ export default function BottomBar() {
                     value={percentage}
                     text={`Hoje`} />
             </BotaoHoje>
-        </>
+        </div>
     )
 }
 

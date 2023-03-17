@@ -13,13 +13,14 @@ export default function HabitosCreationCard(props) {
     }
 
     return (
-        <CreationCard>
-            <input type="text" placeholder="nome do hábito" />
+        <CreationCard data-test="habit-create-container">
+            <input data-test="habit-name-input" type="text" placeholder="nome do hábito" />
             <DaysCreationCard>
                 {daysCheckBox.map((day) => {
                     return (
                         <DayButton
                             key={day.dayName}
+                            data-test="habit-day"
                             selecionado={diasSelecionados.includes(day.dayName)}
                             onClick={() => cliqueBotaoDia(day)}
                         >
@@ -29,8 +30,8 @@ export default function HabitosCreationCard(props) {
                 })}
             </DaysCreationCard>
             <ButtonsCreationCard>
-                <a>Cancelar</a>
-                <button>Salvar</button>
+                <a data-test="habit-create-cancel-btn" >Cancelar</a>
+                <button data-test="habit-create-save-btn" >Salvar</button>
             </ButtonsCreationCard>
         </CreationCard>
     )

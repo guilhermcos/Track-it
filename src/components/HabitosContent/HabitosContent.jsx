@@ -21,7 +21,7 @@ export default function HabitosContent() {
         <HabitosContainer>
             <MyHabitsHeader>
                 <h2>Meus hábitos</h2>
-                <button>+</button>
+                <button data-test="habit-create-btn" >+</button>
             </MyHabitsHeader>
             <HabitosCards>
                 <HabitosCreationCard diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} />
