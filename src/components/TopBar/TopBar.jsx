@@ -3,12 +3,11 @@ import { useContext } from "react";
 import { LoginContext } from "../../App";
 
 export default function TopBar() {
-    const userData = useContext(LoginContext);
-    console.log(userData);
+    const loginData = useContext(LoginContext);
     return (
         <Topo data-test="header">
             <h1>TrackIt</h1>
-            <img src={userData.image} alt="" />
+            <img src={loginData.image} alt="" />
         </Topo>
     )
 }

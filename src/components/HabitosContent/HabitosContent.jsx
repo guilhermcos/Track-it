@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import HabitosCreationCard from "./HabitosCreationCard";
 import HabitoCard from "./HabitoCard";
+import { LoginContext } from "../../App";
 
 
 export default function HabitosContent() {
+    const {loginData} = useContext(LoginContext)
     const [diasSelecionados, setDiasSelecionados] = useState(["Domingo"]);
+    const [isInCreation, setIsInCreation] = useState(false)
 
     const daysCheckBox = [
         { dayChar: "D", dayName: "Domingo" },
@@ -21,10 +24,10 @@ export default function HabitosContent() {
         <HabitosContainer>
             <MyHabitsHeader>
                 <h2>Meus hábitos</h2>
-                <button data-test="habit-create-btn" >+</button>
+                <button onClick={() => setIsInCreation(!isInCreation)} data-test="habit-create-btn" >+</button>
             </MyHabitsHeader>
             <HabitosCards>
-                <HabitosCreationCard diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} />
+                {(!isInCreation) ? <HabitosCreationCard diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} /> : null}
                 <HabitoCard daysCheckBox={daysCheckBox} />
                 <HabitoCard daysCheckBox={daysCheckBox} />
                 <HabitoCard daysCheckBox={daysCheckBox} />
@@ -38,6 +41,7 @@ export default function HabitosContent() {
 const HabitosCards = styled.div`
     display: flex;
     flex-direction: column;
+    margin-top: 15px;
     align-items: center;
     gap: 10px;
 `

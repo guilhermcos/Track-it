@@ -8,7 +8,7 @@ export const LoginContext = createContext();
 
 export default function App() {
   const [loginData, setLoginData] = useState();
-  console.log(loginData);
+  
 
   return (
     <>

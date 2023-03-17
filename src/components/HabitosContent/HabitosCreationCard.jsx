@@ -110,7 +110,6 @@ const CreationCard = styled.div`
     align-items: center;
     flex-direction: column;
     gap: 8px;
-    margin-top: 20px;
     height: 180px;
     width: 90%;
     border-radius: 5px;

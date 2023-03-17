@@ -1,13 +1,20 @@
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { createContext, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { LoginContext } from "../../App";
 
 export default function LoginContent(props) {
     const { loginData, setLoginData } = props;
     const navigate = useNavigate();
     const [emailLogin, setEmailLogin] = useState("");
     const [senhaLogin, setSenhaLogin] = useState("");
+
+
+    function saveDataInLocalStorage(dados) {
+        const dadosSerializados = JSON.stringify(dados);
+        localStorage.setItem("dadosUsuario", dadosSerializados);
+    }
 
     function login(e) {
         e.preventDefault();
@@ -20,6 +27,7 @@ export default function LoginContent(props) {
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
         const promise = axios.post(URL, dadosLogin);
         promise.then((res) => {
+            saveDataInLocalStorage(res.data);
             setLoginData(res.data);
             navigate("/habitos");
         });
