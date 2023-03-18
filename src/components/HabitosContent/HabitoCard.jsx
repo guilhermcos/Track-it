@@ -8,26 +8,29 @@ export default function HabitoCard(props) {
     const { daysCheckBox, habito, setHabitosUsuario } = props;
 
     function deletarHabito(id) {
-        const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
-        const promise = axios.delete(URL, {
-            headers: {
-                "Authorization": `Bearer ${loginData.token}`
-            }
-        });
-        promise.then((res) => {
-            setHabitosUsuario((habitosUsuario) => {
-                return habitosUsuario.filter((habito) => {
-                    if (habito.id === id) {
-                        return false
-                    } else {
-                        return true
-                    }
+        if (window.confirm("Tem certeza que quer apagar este hábito?")) {
+
+            const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
+            const promise = axios.delete(URL, {
+                headers: {
+                    "Authorization": `Bearer ${loginData.token}`
+                }
+            });
+            promise.then((res) => {
+                setHabitosUsuario((habitosUsuario) => {
+                    return habitosUsuario.filter((habito) => {
+                        if (habito.id === id) {
+                            return false
+                        } else {
+                            return true
+                        }
+                    })
                 })
-            })
-        });
-        promise.catch((err) => {
-            console.log(err.response.data)
-        });
+            });
+            promise.catch((err) => {
+                console.log(err.response.data)
+            });
+        }
     }
 
     return (

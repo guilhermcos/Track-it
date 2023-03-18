@@ -53,7 +53,8 @@ export default function HabitosCreationCard(props) {
         <CreationCard data-test="habit-create-container">
             <input
                 onChange={(e) => setNovoHabito(e.target.value)}
-                data-test="habit-name-input" type="text"
+                data-test="habit-name-input"
+                type="text"
                 placeholder="nome do hábito"
                 required />
             <DaysCreationCard>
@@ -71,7 +72,7 @@ export default function HabitosCreationCard(props) {
                 })}
             </DaysCreationCard>
             <ButtonsCreationCard>
-                <a onClick={() => { setDiasSelecionados([]); setIsInCreation((isInCreation) => !isInCreation) }} data-test="habit-create-cancel-btn" >Cancelar</a>
+                <a onClick={() => {setIsInCreation((isInCreation) => !isInCreation) }} data-test="habit-create-cancel-btn" >Cancelar</a>
                 <button onClick={handleSubmit} type="submit" data-test="habit-create-save-btn" >Salvar</button>
             </ButtonsCreationCard>
         </CreationCard>

@@ -26,7 +26,7 @@ export default function HabitosContent() {
         <HabitosContainer>
             <MyHabitsHeader>
                 <h2>Meus hábitos</h2>
-                <button onClick={() => {setDiasSelecionados([]); setIsInCreation(!isInCreation)}} data-test="habit-create-btn" >+</button>
+                <button onClick={() => {setIsInCreation(!isInCreation)}} data-test="habit-create-btn" >+</button>
             </MyHabitsHeader>
             <HabitosCards>
                 {(!isInCreation) ? <HabitosCreationCard setHabitosUsuario={setHabitosUsuario} setIsInCreation={setIsInCreation} diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} /> : null}
