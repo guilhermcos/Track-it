@@ -10,7 +10,7 @@ export default function BottomBar() {
     return (
         <div data-test="menu">
             <NavBar>
-                <Link data-test="habit-link" >Hábitos</Link>
+                <Link to={"/habitos"} data-test="habit-link" >Hábitos</Link>
                 <Link data-test="history-link" >Histórico</Link>
             </NavBar>
             <BotaoHoje onClick={() => navigate("/hoje")} data-test="today-link" >

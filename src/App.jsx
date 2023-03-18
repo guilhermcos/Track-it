@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Habitos from "./pages/Habitos";
+import Hoje from "./pages/Hoje";
 import GlobalStyle from "./globalStyles";
 import { useState, createContext } from "react";
 export const LoginContext = createContext();
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/" element={<Login loginData={loginData} setLoginData={setLoginData} />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/habitos" element={<Habitos />} />
+            <Route path="/hoje" element={<Hoje />} />
           </Routes>
         </BrowserRouter>
       </LoginContext.Provider>

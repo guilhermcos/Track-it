@@ -33,7 +33,7 @@ export default function LoginContent(props) {
             saveDataInLocalStorage(res.data);
             setIsLoading(false);
             setLoginData(res.data);
-            navigate("/habitos");
+            navigate("/hoje");
         });
         promise.catch((err) => {
             setIsLoading(false);
