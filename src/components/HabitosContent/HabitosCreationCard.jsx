@@ -1,27 +1,68 @@
 import styled from "styled-components";
+import { useState, useRef, useContext } from "react";
+import axios from "axios";
+import { LoginContext } from "../../App";
 
 export default function HabitosCreationCard(props) {
-    const {diasSelecionados, setDiasSelecionados, daysCheckBox} = props;
-    
+    const { setHabitosUsuario, diasSelecionados, setDiasSelecionados, daysCheckBox, setIsInCreation } = props;
+    const [novoHabito, setNovoHabito] = useState("");
+    const loginData = useContext(LoginContext);
+
+
 
     function cliqueBotaoDia(day) {
-        if (diasSelecionados.some((diaSelecionado) => diaSelecionado === day.dayName)) {
-            setDiasSelecionados((diasSelecionados) => diasSelecionados.filter((diaSelecionado) => diaSelecionado !== day.dayName))
+        if (diasSelecionados.some((diaSelecionado) => diaSelecionado === day.id)) {
+            setDiasSelecionados((diasSelecionados) => diasSelecionados.filter((diaSelecionado) => diaSelecionado !== day.id))
         } else {
-            setDiasSelecionados((diasSelecionados) => [...diasSelecionados, day.dayName]);
+            setDiasSelecionados((diasSelecionados) => [...diasSelecionados, day.id]);
+        }
+    }
+
+    function criarHabito() {
+        const body = {
+            name: novoHabito,
+            days: diasSelecionados
+        };
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${loginData.token}`
+            }
+        };
+        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+        const promise = axios.post(URL, body, config);
+        promise.then((res) => {
+            setDiasSelecionados([]);
+            setIsInCreation((isInCreation) => !isInCreation);
+            setHabitosUsuario((habitosUsuario) => [...habitosUsuario, res.data])
+        });
+        promise.catch((err) => {
+            console.log(err.response.data)
+        });
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault()
+        if (novoHabito === "") {
+            alert("Insira um nome para o hábito");
+        } else {
+            criarHabito();
         }
     }
 
     return (
         <CreationCard data-test="habit-create-container">
-            <input data-test="habit-name-input" type="text" placeholder="nome do hábito" />
+            <input
+                onChange={(e) => setNovoHabito(e.target.value)}
+                data-test="habit-name-input" type="text"
+                placeholder="nome do hábito"
+                required />
             <DaysCreationCard>
                 {daysCheckBox.map((day) => {
                     return (
                         <DayButton
                             key={day.dayName}
                             data-test="habit-day"
-                            selecionado={diasSelecionados.includes(day.dayName)}
+                            selecionado={diasSelecionados.includes(day.id)}
                             onClick={() => cliqueBotaoDia(day)}
                         >
                             {day.dayChar}
@@ -30,8 +71,8 @@ export default function HabitosCreationCard(props) {
                 })}
             </DaysCreationCard>
             <ButtonsCreationCard>
-                <a data-test="habit-create-cancel-btn" >Cancelar</a>
-                <button data-test="habit-create-save-btn" >Salvar</button>
+                <a onClick={() => { setDiasSelecionados([]); setIsInCreation((isInCreation) => !isInCreation) }} data-test="habit-create-cancel-btn" >Cancelar</a>
+                <button onClick={handleSubmit} type="submit" data-test="habit-create-save-btn" >Salvar</button>
             </ButtonsCreationCard>
         </CreationCard>
     )

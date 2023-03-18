@@ -1,23 +1,51 @@
+import { useContext } from "react";
 import styled from "styled-components"
+import { LoginContext } from "../../App";
+import axios from "axios";
 
 export default function HabitoCard(props) {
-    const { daysCheckBox } = props;
+    const loginData = useContext(LoginContext);
+    const { daysCheckBox, habito, setHabitosUsuario } = props;
+
+    function deletarHabito(id) {
+        const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
+        const promise = axios.delete(URL, {
+            headers: {
+                "Authorization": `Bearer ${loginData.token}`
+            }
+        });
+        promise.then((res) => {
+            setHabitosUsuario((habitosUsuario) => {
+                return habitosUsuario.filter((habito) => {
+                    if (habito.id === id) {
+                        return false
+                    } else {
+                        return true
+                    }
+                })
+            })
+        });
+        promise.catch((err) => {
+            console.log(err.response.data)
+        });
+    }
 
     return (
         <StyledHabitoCard data-test="habit-container" >
-            <h3 data-test="habit-name" >Ler um capítulo do livro</h3>
+            <h3 data-test="habit-name" >{habito.name}</h3>
             <DaysCreationCard>
                 {daysCheckBox.map((day) => {
                     return (
                         <DayButton
                             key={day.dayName}
+                            selecionado={habito.days.includes(day.id) ? true : false}
                             data-test="habit-day">
                             {day.dayChar}
                         </DayButton>
                     )
                 })}
             </DaysCreationCard>
-            <img data-test="habit-delete-btn" src="assets/trash-outline.svg" alt="" />
+            <img onClick={() => deletarHabito(habito.id)} data-test="habit-delete-btn" src="assets/trash-outline.svg" alt="" />
         </StyledHabitoCard>
     )
 }

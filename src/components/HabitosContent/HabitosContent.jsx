@@ -3,36 +3,35 @@ import { useContext, useEffect, useState } from "react";
 import HabitosCreationCard from "./HabitosCreationCard";
 import HabitoCard from "./HabitoCard";
 import { LoginContext } from "../../App";
+import UserHabitos from "./UserHabitos";
 
 
 export default function HabitosContent() {
     const {loginData} = useContext(LoginContext)
-    const [diasSelecionados, setDiasSelecionados] = useState(["Domingo"]);
-    const [isInCreation, setIsInCreation] = useState(false)
+    const [diasSelecionados, setDiasSelecionados] = useState([]);
+    const [isInCreation, setIsInCreation] = useState(true);
+    const [habitosUsuario, setHabitosUsuario] = useState(undefined);
 
     const daysCheckBox = [
-        { dayChar: "D", dayName: "Domingo" },
-        { dayChar: "S", dayName: "Segunda" },
-        { dayChar: "T", dayName: "Terça" },
-        { dayChar: "Q", dayName: "Quarta" },
-        { dayChar: "Q", dayName: "Quinta" },
-        { dayChar: "S", dayName: "Sexta" },
-        { dayChar: "S", dayName: "Sábado" }
+        { id: 7, dayChar: "D", dayName: "Domingo" },
+        { id: 1, dayChar: "S", dayName: "Segunda" },
+        { id: 2, dayChar: "T", dayName: "Terça" },
+        { id: 3, dayChar: "Q", dayName: "Quarta" },
+        { id: 4, dayChar: "Q", dayName: "Quinta" },
+        { id: 5, dayChar: "S", dayName: "Sexta" },
+        { id: 6, dayChar: "S", dayName: "Sábado" }
     ];
 
     return (
         <HabitosContainer>
             <MyHabitsHeader>
                 <h2>Meus hábitos</h2>
-                <button onClick={() => setIsInCreation(!isInCreation)} data-test="habit-create-btn" >+</button>
+                <button onClick={() => {setDiasSelecionados([]); setIsInCreation(!isInCreation)}} data-test="habit-create-btn" >+</button>
             </MyHabitsHeader>
             <HabitosCards>
-                {(!isInCreation) ? <HabitosCreationCard diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} /> : null}
-                <HabitoCard daysCheckBox={daysCheckBox} />
-                <HabitoCard daysCheckBox={daysCheckBox} />
-                <HabitoCard daysCheckBox={daysCheckBox} />
+                {(!isInCreation) ? <HabitosCreationCard setHabitosUsuario={setHabitosUsuario} setIsInCreation={setIsInCreation} diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} /> : null}
+                <UserHabitos habitosUsuario={habitosUsuario} setHabitosUsuario={setHabitosUsuario} daysCheckBox={daysCheckBox} />
             </HabitosCards>
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
         </HabitosContainer>
     )
 }
