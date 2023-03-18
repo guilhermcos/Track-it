@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css'
 
 export default function BottomBar() {
+    const navigate = useNavigate();
 
     const percentage = 60;
     return (
@@ -12,7 +13,7 @@ export default function BottomBar() {
                 <Link data-test="habit-link" >Hábitos</Link>
                 <Link data-test="history-link" >Histórico</Link>
             </NavBar>
-            <BotaoHoje data-test="today-link" >
+            <BotaoHoje onClick={() => navigate("/hoje")} data-test="today-link" >
                 <CircularProgressbar
                     strokeWidth={10}
                     styles={{
