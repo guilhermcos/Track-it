@@ -20,7 +20,6 @@ export default function HojeCard(props) {
 
 const StyledHojeCard = styled.div`
     position: relative;
-    border: 1px solid black;
     background-color: #ffffff;
     padding-left: 10px;
     height: 94px;
