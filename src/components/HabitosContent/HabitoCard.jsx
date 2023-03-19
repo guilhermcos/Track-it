@@ -90,7 +90,7 @@ const DaysCreationCard = styled.div`
     gap: 4px;
 `
 
-const DayButton = styled.button`
+const DayButton = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;

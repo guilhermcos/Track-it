@@ -15,7 +15,7 @@ export default function HabitosContent() {
     const navigate = useNavigate();
 
     const daysCheckBox = [
-        { id: 7, dayChar: "D", dayName: "Domingo" },
+        { id: 0, dayChar: "D", dayName: "Domingo" },
         { id: 1, dayChar: "S", dayName: "Segunda" },
         { id: 2, dayChar: "T", dayName: "Terça" },
         { id: 3, dayChar: "Q", dayName: "Quarta" },
@@ -35,7 +35,7 @@ export default function HabitosContent() {
         <HabitosContainer>
             <MyHabitsHeader>
                 <h2>Meus hábitos</h2>
-                <button onClick={() => { setIsInCreation(!isInCreation) }} data-test="habit-create-btn" >+</button>
+                <button onClick={() => { setIsInCreation(false) }} data-test="habit-create-btn" >+</button>
             </MyHabitsHeader>
             <HabitosCards>
                 {(!isInCreation) ? <HabitosCreationCard setHabitosUsuario={setHabitosUsuario} setIsInCreation={setIsInCreation} diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} /> : null}
@@ -95,8 +95,7 @@ const HabitosContainer = styled.main`
     p {
             font-family: Lexend Deca;
             color: #666666;
-            margin-left: 17px;
-            margin-top: 30px;
+            margin-top: 5px;
             font-size: 18px;
             font-weight: 400;
             line-height: 22px;

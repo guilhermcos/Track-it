@@ -2,6 +2,7 @@ import HabitoCard from "./HabitoCard";
 import axios from "axios";
 import { useContext, useEffect } from "react";
 import { LoginContext } from "../../App";
+import styled from "styled-components";
 
 export default function UserHabitos(props) {
     const loginData = useContext(LoginContext);

@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { useState, useRef, useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { LoginContext } from "../../App";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function HabitosCreationCard(props) {
     const { setHabitosUsuario, diasSelecionados, setDiasSelecionados, daysCheckBox, setIsInCreation } = props;
     const [novoHabito, setNovoHabito] = useState("");
     const loginData = useContext(LoginContext);
+    const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -19,6 +21,7 @@ export default function HabitosCreationCard(props) {
     }
 
     function criarHabito() {
+        setIsLoading(true);
         const body = {
             name: novoHabito,
             days: diasSelecionados
@@ -33,10 +36,12 @@ export default function HabitosCreationCard(props) {
         promise.then((res) => {
             setDiasSelecionados([]);
             setIsInCreation((isInCreation) => !isInCreation);
-            setHabitosUsuario((habitosUsuario) => [...habitosUsuario, res.data])
+            setHabitosUsuario((habitosUsuario) => [...habitosUsuario, res.data]);
+            setIsLoading(false);
         });
         promise.catch((err) => {
-            console.log(err.response.data)
+            console.log(err.response.data);
+            setIsLoading(false);
         });
     }
 
@@ -56,6 +61,7 @@ export default function HabitosCreationCard(props) {
                 data-test="habit-name-input"
                 type="text"
                 placeholder="nome do hábito"
+                disabled={isLoading}
                 required />
             <DaysCreationCard>
                 {daysCheckBox.map((day) => {
@@ -65,15 +71,18 @@ export default function HabitosCreationCard(props) {
                             data-test="habit-day"
                             selecionado={diasSelecionados.includes(day.id)}
                             onClick={() => cliqueBotaoDia(day)}
+                            disabled={isLoading}
                         >
                             {day.dayChar}
                         </DayButton>
                     )
                 })}
             </DaysCreationCard>
-            <ButtonsCreationCard>
-                <a onClick={() => {setIsInCreation((isInCreation) => !isInCreation) }} data-test="habit-create-cancel-btn" >Cancelar</a>
-                <button onClick={handleSubmit} type="submit" data-test="habit-create-save-btn" >Salvar</button>
+            <ButtonsCreationCard isLoading={isLoading}>
+                <a onClick={() => { setIsInCreation((isInCreation) => !isInCreation) }} data-test="habit-create-cancel-btn" >Cancelar</a>
+                <button onClick={handleSubmit} type="submit" data-test="habit-create-save-btn" disabled={isLoading} >
+                    {isLoading ? <ThreeDots width={55} color="#ffffff" /> : "Salvar"}
+                </button>
             </ButtonsCreationCard>
         </CreationCard>
     )
@@ -102,6 +111,7 @@ const ButtonsCreationCard = styled.div`
         align-items: center;
         padding-bottom: 2px;
         background-color: #52B6FF;
+        opacity: ${(props) => props.isLoading ? "70%" : "100%"};
         color: #FFFFFF;
         height: 35px;
         width: 84px;
