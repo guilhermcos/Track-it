@@ -2,11 +2,13 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css'
+import { useContext } from "react";
+import { Percentual } from "../../App";
 
 export default function BottomBar() {
     const navigate = useNavigate();
 
-    const percentage = 60;
+    const percentage = useContext(Percentual).percentual;
     return (
         <div data-test="menu">
             <NavBar>

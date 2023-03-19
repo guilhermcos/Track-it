@@ -4,6 +4,18 @@ import { LoginContext } from "../../App";
 
 export default function TopBar() {
     const loginData = useContext(LoginContext);
+
+    //Bugf5
+    if (loginData === undefined) {
+        return (
+            <Topo data-test="header">
+                <h1>404</h1>
+                <img alt="" />
+            </Topo>
+        )
+    }
+    //bugf5
+
     return (
         <Topo data-test="header">
             <h1>TrackIt</h1>

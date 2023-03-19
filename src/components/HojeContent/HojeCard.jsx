@@ -1,17 +1,87 @@
 import styled from "styled-components";
+import { useContext, useState } from "react";
+import { LoginContext } from "../../App";
+import axios from "axios";
 
 export default function HojeCard(props) {
-    const { habito } = props;
+    const { habito, setHabitosConcluidos } = props;
+    const loginData = useContext(LoginContext);
+    const [isDone, setIsDone] = useState(habito.done);
+    const [current, setCurrent] = useState(habito.currentSequence);
+    const [record, setRecord] = useState(habito.highestSequence);
+    const [isLoading, setIsLoading] = useState(false);
+
+    function checkHabit() {
+        const config = {
+            headers: {
+                Authorization : `Bearer ${loginData.token}`
+            }
+        };
+
+        const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/check`;
+        const promise = axios.post(URL,{},config);
+        promise.then(() => {
+            if(record < (current+1)){
+                setRecord((record) => record+1);
+            }
+            setCurrent((current) => current+1);
+            setIsLoading(false);
+        });
+        promise.catch((err) => {
+            setHabitosConcluidos((habitosConcluidos) => habitosConcluidos-1);
+            setIsDone(false);
+            setIsLoading(false);
+            alert(err.response.data.message);
+        });
+    }
+
+    function unCheckHabit() {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${loginData.token}`
+            }
+        };
+
+        const URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habito.id}/uncheck`;
+        const promise = axios.post(URL,{},config);
+        promise.then(() => {
+            if (current === record){
+                setRecord((record) => record-1);
+            }
+            setCurrent((current) => current-1);
+            setIsLoading(false);
+        });
+        promise.catch((err) => {
+            setIsDone(true);
+            setIsLoading(false);
+            setHabitosConcluidos((habitosConcluidos) => habitosConcluidos+1);
+            alert(err.response.data.message);
+        });
+    }
+
+    function checkClick() {
+        if (isDone) {
+            setHabitosConcluidos((habitosConcluidos) => habitosConcluidos-1);
+            setIsDone(false);
+            setIsLoading(true);
+            unCheckHabit();
+        } else {
+            setHabitosConcluidos((habitosConcluidos) => habitosConcluidos+1);
+            setIsDone(true);
+            setIsLoading(true);
+            checkHabit();
+        }
+    }
 
     return (
-        <StyledHojeCard>
+        <StyledHojeCard current={current} record={record} isDone={isDone}>
             <h1>{habito.name}</h1>
             <h2>
-                Sequência atual: {habito.currentSequence} dias
+                Sequência atual: <span className="current">{current} dias</span>
                 <br></br>
-                Seu recorde: {habito.highestSequence} dias
+                Seu recorde: <span className="record">{record} dias</span>
             </h2>
-            <button>
+            <button onClick={checkClick} disabled={isLoading} >
                 <img src="assets/check.svg" alt="" />
             </button>
         </StyledHojeCard>
@@ -54,9 +124,15 @@ const StyledHojeCard = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #8FC549;
+        background-color: ${(props) => props.isDone ? "#8FC549" : "#EBEBEB"};
         height: 69px;
         width: 69px;
         border-radius: 5px;
+    }
+    .current {
+        color: ${(props) => props.isDone ? "#8FC549" : "#666666"};
+    }
+    .record {
+        color: ${(props) => (props.current === props.record && props.current !== 0) ? "#8FC549" : "#666666"}
     }
 `

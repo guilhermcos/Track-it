@@ -8,19 +8,23 @@ export default function UserHabitos(props) {
     const { daysCheckBox, setHabitosUsuario, habitosUsuario } = props;
 
     useEffect(() => {
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${loginData.token}`
-            }
-        };
-        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-        const promise = axios.get(URL, config);
-        promise.then((res) => {
-            setHabitosUsuario(res.data);
-        });
-        promise.catch((err) => {
-            console.log(err.data);
-        });
+        if (loginData !== undefined) {
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${loginData.token}`
+                }
+            };
+            const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+            const promise = axios.get(URL, config);
+            promise.then((res) => {
+                setHabitosUsuario(res.data);
+            });
+            promise.catch((err) => {
+                console.log(err.data);
+            });
+        } else {
+            return
+        }
     }, []);
 
     if (habitosUsuario === undefined || habitosUsuario.length === 0) {
@@ -33,10 +37,10 @@ export default function UserHabitos(props) {
         habitosUsuario.map((habito) => {
             return (
                 <HabitoCard
-                setHabitosUsuario={setHabitosUsuario}
-                key={habito.id}
-                habito={habito}
-                daysCheckBox={daysCheckBox} />
+                    setHabitosUsuario={setHabitosUsuario}
+                    key={habito.id}
+                    habito={habito}
+                    daysCheckBox={daysCheckBox} />
             )
         })
     )

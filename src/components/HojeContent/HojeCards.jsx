@@ -2,7 +2,7 @@ import styled from "styled-components";
 import HojeCard from "./HojeCard";
 
 export default function HojeCards(props) {
-    const { habitosHoje } = props
+    const { habitosHoje, setHabitosConcluidos } = props
 
     return (
         <StyledHojeCards>
@@ -10,6 +10,7 @@ export default function HojeCards(props) {
                 return (
                     <HojeCard 
                     key={habito.id}
+                    setHabitosConcluidos={setHabitosConcluidos}
                     habito={habito} />    
                 )
             })}

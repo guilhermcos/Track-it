@@ -4,13 +4,15 @@ import HabitosCreationCard from "./HabitosCreationCard";
 import HabitoCard from "./HabitoCard";
 import { LoginContext } from "../../App";
 import UserHabitos from "./UserHabitos";
+import { useNavigate } from "react-router-dom";
 
 
 export default function HabitosContent() {
-    const {loginData} = useContext(LoginContext)
+    const loginData = useContext(LoginContext)
     const [diasSelecionados, setDiasSelecionados] = useState([]);
     const [isInCreation, setIsInCreation] = useState(true);
     const [habitosUsuario, setHabitosUsuario] = useState(undefined);
+    const navigate = useNavigate();
 
     const daysCheckBox = [
         { id: 7, dayChar: "D", dayName: "Domingo" },
@@ -22,11 +24,18 @@ export default function HabitosContent() {
         { id: 6, dayChar: "S", dayName: "Sábado" }
     ];
 
+    useEffect(() => {
+        if (loginData === undefined) {
+            navigate("/");
+            return
+        }
+    }, [])
+
     return (
         <HabitosContainer>
             <MyHabitsHeader>
                 <h2>Meus hábitos</h2>
-                <button onClick={() => {setIsInCreation(!isInCreation)}} data-test="habit-create-btn" >+</button>
+                <button onClick={() => { setIsInCreation(!isInCreation) }} data-test="habit-create-btn" >+</button>
             </MyHabitsHeader>
             <HabitosCards>
                 {(!isInCreation) ? <HabitosCreationCard setHabitosUsuario={setHabitosUsuario} setIsInCreation={setIsInCreation} diasSelecionados={diasSelecionados} setDiasSelecionados={setDiasSelecionados} daysCheckBox={daysCheckBox} /> : null}

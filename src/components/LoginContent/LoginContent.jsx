@@ -12,6 +12,15 @@ export default function LoginContent(props) {
     const [senhaLogin, setSenhaLogin] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+    useEffect(() => {
+        const dadosUsuario = localStorage.getItem("dadosUsuario");
+        if (dadosUsuario !== null) {
+            const dadosUsuarioDecode = JSON.parse(dadosUsuario);
+            setIsLoading(false);
+            setLoginData(dadosUsuarioDecode);
+            navigate("/hoje");   
+        }
+    }, []);
 
     function saveDataInLocalStorage(dados) {
         const dadosSerializados = JSON.stringify(dados);

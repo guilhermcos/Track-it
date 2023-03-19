@@ -1,31 +1,48 @@
 import { useContext, useEffect, useState } from "react";
-import { LoginContext } from "../../App";
+import { LoginContext, Percentual } from "../../App";
 import styled from "styled-components";
 import HojeCards from "./HojeCards";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function HojeContent() {
     const loginData = useContext(LoginContext);
+    const { percentual , setPercentual } = useContext(Percentual);
     const [habitosHoje, setHabitosHoje] = useState([]);
+    const [totalHabitos, setTotalHabitos] = useState(0);
+    const [habitosConcluidos, setHabitosConcluidos] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        setPercentual(() => (habitosConcluidos/totalHabitos*100).toFixed(0));
+    }, [totalHabitos, habitosConcluidos])
 
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${loginData.token}`
+    function contaConcluidos(habits) {
+        const concluidos = habits.filter((habit) => habit.done );
+        setHabitosConcluidos(concluidos.length);
+    }
+
+    useEffect(() => {
+        if (loginData !== undefined) {
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${loginData.token}`
+                }
             }
+            const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
+            const promise = axios.get(URL, config);
+            promise.then((res) => {
+                setHabitosHoje(res.data);
+                setTotalHabitos(res.data.length);
+                contaConcluidos(res.data);
+            });
+            promise.catch((err) => {
+                console.log(err.response.data);
+            });
+        } else {
+            navigate("/");
+            return
         }
-        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
-        const promise = axios.get(URL, config);
-        promise.then((res) => {
-            console.log(res.data);
-            setHabitosHoje(res.data);
-        });
-        promise.catch((err) => {
-            console.log(err.response.data);
-        });
-
-
     }, []);
 
     function gerarDataHoje() {
@@ -38,13 +55,15 @@ export default function HojeContent() {
         return dataFormatada;
     }
 
+
     return (
         <HojeContainer>
-            <HojeHeader>
+            <HojeHeader
+            isColored={(percentual > 0)}>
                 <h2>{gerarDataHoje()}</h2>
-                <h3>Nenhum hábito concluído ainda</h3>
+                <h3>{(percentual > 0) ? `${percentual}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}</h3>
             </HojeHeader>
-            <HojeCards habitosHoje={habitosHoje} />
+            <HojeCards setHabitosConcluidos={setHabitosConcluidos} habitosHoje={habitosHoje} />
         </HojeContainer>
     )
 }
@@ -71,7 +90,7 @@ const HojeHeader = styled.div`
         text-align: left;
     }
     h3 {
-        color: #BABABA;
+        color: ${(props) => (props.isColored) ? "#8FC549" : "#BABABA"};
         font-family: Lexend Deca;
         font-size: 18px;
         font-weight: 400;
