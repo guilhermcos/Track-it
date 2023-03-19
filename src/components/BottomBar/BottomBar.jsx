@@ -13,7 +13,7 @@ export default function BottomBar() {
         <div data-test="menu">
             <NavBar>
                 <Link to={"/habitos"} data-test="habit-link" >Hábitos</Link>
-                <Link data-test="history-link" >Histórico</Link>
+                <Link to={"/historico"} data-test="history-link" >Histórico</Link>
             </NavBar>
             <BotaoHoje onClick={() => navigate("/hoje")} data-test="today-link" >
                 <CircularProgressbar

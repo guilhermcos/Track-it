@@ -61,8 +61,8 @@ export default function HojeContent() {
         <HojeContainer>
             <HojeHeader
             isColored={(percentual > 0)}>
-                <h2>{gerarDataHoje()}</h2>
-                <h3>{(percentual > 0) ? `${percentual}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}</h3>
+                <h2 data-test="today">{gerarDataHoje()}</h2>
+                <h3 data-test="today-counter">{(percentual > 0) ? `${percentual}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}</h3>
             </HojeHeader>
             <HojeCards setHabitosConcluidos={setHabitosConcluidos} habitosHoje={habitosHoje} />
         </HojeContainer>

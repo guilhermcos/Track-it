@@ -74,14 +74,15 @@ export default function HojeCard(props) {
     }
 
     return (
-        <StyledHojeCard current={current} record={record} isDone={isDone}>
-            <h1>{habito.name}</h1>
-            <h2>
+        <StyledHojeCard data-test="today-habit-container" current={current} record={record} isDone={isDone}>
+            <h1 data-test="today-habit-name">{habito.name}</h1>
+            <h2 data-test="today-habit-sequence">
                 Sequência atual: <span className="current">{current} dias</span>
-                <br></br>
+            </h2>
+            <h2 data-test="today-habit-record">
                 Seu recorde: <span className="record">{record} dias</span>
             </h2>
-            <button onClick={checkClick} disabled={isLoading} >
+            <button data-test="today-habit-check-btn" onClick={checkClick} disabled={isLoading} >
                 <img src="assets/check.svg" alt="" />
             </button>
         </StyledHojeCard>
@@ -104,10 +105,9 @@ const StyledHojeCard = styled.div`
         line-height: 25px;
         letter-spacing: 0em;
         text-align: left;
-
+        margin-bottom: 7px;
     }
     h2 {
-        margin-top: 7px;
         color: #666666;
         font-family: Lexend Deca;
         font-size: 13px;

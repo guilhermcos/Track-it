@@ -60,6 +60,7 @@ export default function HabitosCreationCard(props) {
                 onChange={(e) => setNovoHabito(e.target.value)}
                 data-test="habit-name-input"
                 type="text"
+                value={novoHabito}
                 placeholder="nome do hábito"
                 disabled={isLoading}
                 required />
@@ -79,7 +80,7 @@ export default function HabitosCreationCard(props) {
                 })}
             </DaysCreationCard>
             <ButtonsCreationCard isLoading={isLoading}>
-                <a onClick={() => { setIsInCreation((isInCreation) => !isInCreation) }} data-test="habit-create-cancel-btn" >Cancelar</a>
+                <a onClick={() => { setIsInCreation((isInCreation) => !isInCreation) }} disabled={isLoading} data-test="habit-create-cancel-btn" >Cancelar</a>
                 <button onClick={handleSubmit} type="submit" data-test="habit-create-save-btn" disabled={isLoading} >
                     {isLoading ? <ThreeDots width={55} color="#ffffff" /> : "Salvar"}
                 </button>
