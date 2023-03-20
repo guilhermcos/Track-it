@@ -6,6 +6,7 @@ import axios from "axios";
 import { LoginContext } from "../../App";
 import DiaHistorico from "./DiaHistorico";
 import { useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function HistoricoContent() {
     const navigate = useNavigate();
@@ -15,9 +16,11 @@ export default function HistoricoContent() {
     const [datasIncompletas, setDatasIncompletas] = useState([]);
     const [dadosDatas, setDadosDatas] = useState();
     const [dataClicada, setDataClicada] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (loginData !== undefined) {
+            setIsLoading(true);
             const config = {
                 headers: {
                     "Authorization": `Bearer ${loginData.token}`
@@ -28,8 +31,10 @@ export default function HistoricoContent() {
             promise.then((res) => {
                 separarDatas(res.data);
                 setDadosDatas(res.data);
+                setIsLoading(false);
             });
             promise.catch((err) => {
+                setIsLoading(false);
                 console.log(err.response.data);
             });
         } else {
@@ -100,6 +105,15 @@ export default function HistoricoContent() {
             setDataClicada(false);
         }
     };
+
+    if (isLoading) {
+        return (
+            <HistoricoContainer data-test="calendar">
+                <h1>Histórico</h1>
+                <ThreeDots />
+            </HistoricoContainer>
+        )
+    }
 
     return (
         <HistoricoContainer data-test="calendar">

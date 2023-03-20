@@ -25,8 +25,8 @@ export default function HojeContent() {
     }
 
     useEffect(() => {
-        setIsLoading(true);
         if (loginData !== undefined) {
+            setIsLoading(true);
             const config = {
                 headers: {
                     "Authorization": `Bearer ${loginData.token}`

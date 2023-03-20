@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { useContext } from "react";
 import { LoginContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 export default function TopBar() {
+    const navigate = useNavigate();
     const loginData = useContext(LoginContext);
 
     //Bugf5
@@ -16,10 +18,17 @@ export default function TopBar() {
     }
     //bugf5
 
+    function logOut() {
+        if (window.confirm("Deseja fazer LogOut para entrar com outra conta?")) {
+            localStorage.removeItem("dadosUsuario");
+            navigate("/");
+        }
+    }
+
     return (
         <Topo data-test="header">
             <h1>TrackIt</h1>
-            <img src={loginData.image} alt="" />
+            <img onClick={logOut} src={loginData.image} alt="" />
         </Topo>
     )
 }
