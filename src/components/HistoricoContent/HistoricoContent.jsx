@@ -4,12 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
 import { LoginContext } from "../../App";
+import DiaHistorico from "./DiaHistorico";
 
 export default function HistoricoContent() {
     const loginData = useContext(LoginContext);
     const [value, onChange] = useState(new Date());
     const [datasCompletas, setDatasCompletas] = useState([]);
     const [datasIncompletas, setDatasIncompletas] = useState([]);
+    const [dadosDatas, setDadosDatas] = useState();
 
     useEffect(() => {
         const config = {
@@ -21,6 +23,7 @@ export default function HistoricoContent() {
         const promise = axios.get(URL, config);
         promise.then((res) => {
             separarDatas(res.data);
+            setDadosDatas(res.data);
         });
         promise.catch((err) => {
             console.log(err.response.data);
@@ -45,8 +48,6 @@ export default function HistoricoContent() {
             const today = new Date();
             const [dia, mes, ano] = day.day.split('/');
             const dayDate = new Date(ano, mes - 1, dia);
-            console.log(today.toDateString());
-            console.log(dayDate.toDateString());
 
             if (allCompleted && dayDate.toDateString() !== today.toDateString()) {
                 completedDates.push(day.day);
@@ -75,10 +76,25 @@ export default function HistoricoContent() {
         return className;
     };
 
+    function cliqueDia(value, event) {
+        const dia = value.getDate().toString().padStart(2, '0');
+        const mes = (value.getMonth() + 1).toString().padStart(2, '0');
+        const ano = value.getFullYear().toString();
+        const dataFormatada = `${dia}/${mes}/${ano}`;
+
+        if (datasCompletas.includes(dataFormatada)) {
+
+        } else if (datasIncompletas.includes(dataFormatada)) {
+
+        }
+        console.log(dataFormatada);
+    };
+
     return (
-        <HistoricoContainer>
+        <HistoricoContainer data-test="calendar">
             <h1>Histórico</h1>
-            <Calendar data-test="calendar" tileClassName={tileClassName} onChange={onChange} value={value} />
+            <Calendar onClickDay={cliqueDia} tileClassName={tileClassName} onChange={onChange} value={value} />
+            <DiaHistorico />
         </HistoricoContainer>
     )
 
