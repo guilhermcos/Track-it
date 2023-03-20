@@ -5,29 +5,37 @@ import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
 import { LoginContext } from "../../App";
 import DiaHistorico from "./DiaHistorico";
+import { useNavigate } from "react-router-dom";
 
 export default function HistoricoContent() {
+    const navigate = useNavigate();
     const loginData = useContext(LoginContext);
     const [value, onChange] = useState(new Date());
     const [datasCompletas, setDatasCompletas] = useState([]);
     const [datasIncompletas, setDatasIncompletas] = useState([]);
     const [dadosDatas, setDadosDatas] = useState();
+    const [dataClicada, setDataClicada] = useState(false);
 
     useEffect(() => {
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${loginData.token}`
+        if (loginData !== undefined) {
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${loginData.token}`
+                }
             }
+            const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily";
+            const promise = axios.get(URL, config);
+            promise.then((res) => {
+                separarDatas(res.data);
+                setDadosDatas(res.data);
+            });
+            promise.catch((err) => {
+                console.log(err.response.data);
+            });
+        } else {
+            navigate("/");
+            return
         }
-        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily";
-        const promise = axios.get(URL, config);
-        promise.then((res) => {
-            separarDatas(res.data);
-            setDadosDatas(res.data);
-        });
-        promise.catch((err) => {
-            console.log(err.response.data);
-        });
     }, []);
 
     function separarDatas(data) {
@@ -82,22 +90,24 @@ export default function HistoricoContent() {
         const ano = value.getFullYear().toString();
         const dataFormatada = `${dia}/${mes}/${ano}`;
 
-        if (datasCompletas.includes(dataFormatada)) {
-
-        } else if (datasIncompletas.includes(dataFormatada)) {
-
+        if (datasCompletas.includes(dataFormatada) || datasIncompletas.includes(dataFormatada)) {
+            dadosDatas.map((data) => {
+                if (data.day === dataFormatada) {
+                    setDataClicada(data);
+                }
+            })
+        } else {
+            setDataClicada(false);
         }
-        console.log(dataFormatada);
     };
 
     return (
         <HistoricoContainer data-test="calendar">
             <h1>Histórico</h1>
             <Calendar onClickDay={cliqueDia} tileClassName={tileClassName} onChange={onChange} value={value} />
-            <DiaHistorico />
+            {(!dataClicada) ? <h3>Clique em um dia colorido para ver os dados deste dia...</h3> : <DiaHistorico dadosDia={dataClicada} />}
         </HistoricoContainer>
     )
-
 }
 
 const TiledDiv = styled.div`
@@ -115,8 +125,15 @@ const TiledDiv = styled.div`
 const HistoricoContainer = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     align-items: center;
+    gap: 10px;
+    h3 {
+        font-family: Lexend Deca;
+        color: #666666;
+        width: 80%;
+        text-align: center;
+    }
     h1 {
         color: #126BA5;
         margin-top: 100px;

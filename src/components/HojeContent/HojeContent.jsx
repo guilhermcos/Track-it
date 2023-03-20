@@ -32,7 +32,6 @@ export default function HojeContent() {
             const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
             const promise = axios.get(URL, config);
             promise.then((res) => {
-                console.log(res);
                 setHabitosHoje(res.data);
                 setTotalHabitos(res.data.length);
                 contaConcluidos(res.data);
