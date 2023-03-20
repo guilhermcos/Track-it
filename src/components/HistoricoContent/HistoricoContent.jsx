@@ -21,7 +21,6 @@ export default function HistoricoContent() {
         const promise = axios.get(URL, config);
         promise.then((res) => {
             separarDatas(res.data);
-            console.log(res.data);
         });
         promise.catch((err) => {
             console.log(err.response.data);
@@ -43,9 +42,15 @@ export default function HistoricoContent() {
                 }
             });
 
-            if (allCompleted) {
+            const today = new Date();
+            const [dia, mes, ano] = day.day.split('/');
+            const dayDate = new Date(ano, mes - 1, dia);
+            console.log(today.toDateString());
+            console.log(dayDate.toDateString());
+
+            if (allCompleted && dayDate.toDateString() !== today.toDateString()) {
                 completedDates.push(day.day);
-            } else if (atLeastOneIncomplete) {
+            } else if (atLeastOneIncomplete && dayDate.toDateString() !== today.toDateString()) {
                 incompleteDates.push(day.day);
             }
         });
@@ -54,21 +59,6 @@ export default function HistoricoContent() {
         setDatasCompletas(completedDates);
         setDatasIncompletas(incompleteDates);
     }
-
-    // function tileContent({ date, view }) {
-    //     const formattedDate = date.toLocaleDateString();
-    //     let className = '';
-
-    //     if (view === 'month') {
-    //         if (datasCompletas.includes(formattedDate)) {
-    //             className = 'completed';
-    //         } else if (datasIncompletas.includes(formattedDate)) {
-    //             className = 'incomplete';
-    //         }
-    //     }
-
-    //     return <TiledDiv iscomplete={className} className={`tile ${className}`}></TiledDiv>;
-    // };
 
     function tileClassName({ date, view }) {
         const formattedDate = date.toLocaleDateString();
@@ -88,7 +78,7 @@ export default function HistoricoContent() {
     return (
         <HistoricoContainer>
             <h1>Histórico</h1>
-            <Calendar tileClassName={tileClassName} onChange={onChange} value={value} />
+            <Calendar data-test="calendar" tileClassName={tileClassName} onChange={onChange} value={value} />
         </HistoricoContainer>
     )
 
