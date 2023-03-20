@@ -135,6 +135,6 @@ const StyledHojeCard = styled.div`
         color: ${(props) => props.isDone ? "#8FC549" : "#666666"};
     }
     .record {
-        color: ${(props) => (props.current <= props.record && props.current !== 0) ? "#8FC549" : "#666666"}
+        color: ${(props) => (props.current >= props.record && props.current !== 0) ? "#8FC549" : "#666666"}
     }
 `
