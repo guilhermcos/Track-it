@@ -4,25 +4,28 @@ import styled from "styled-components";
 import HojeCards from "./HojeCards";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function HojeContent() {
     const loginData = useContext(LoginContext);
-    const { percentual , setPercentual } = useContext(Percentual);
+    const { percentual, setPercentual } = useContext(Percentual);
     const [habitosHoje, setHabitosHoje] = useState([]);
     const [totalHabitos, setTotalHabitos] = useState(0);
     const [habitosConcluidos, setHabitosConcluidos] = useState(0);
+    const [isLoading, setIsLoading] = useState(true)
     const navigate = useNavigate();
 
     useEffect(() => {
-        setPercentual(() => (habitosConcluidos/totalHabitos*100).toFixed(0));
+        setPercentual(() => (habitosConcluidos / totalHabitos * 100).toFixed(0));
     }, [totalHabitos, habitosConcluidos])
 
     function contaConcluidos(habits) {
-        const concluidos = habits.filter((habit) => habit.done );
+        const concluidos = habits.filter((habit) => habit.done);
         setHabitosConcluidos(concluidos.length);
     }
 
     useEffect(() => {
+        setIsLoading(true);
         if (loginData !== undefined) {
             const config = {
                 headers: {
@@ -35,9 +38,11 @@ export default function HojeContent() {
                 setHabitosHoje(res.data);
                 setTotalHabitos(res.data.length);
                 contaConcluidos(res.data);
+                setIsLoading(false);
             });
             promise.catch((err) => {
                 console.log(err.response.data);
+                setIsLoading(false);
             });
         } else {
             navigate("/");
@@ -59,11 +64,11 @@ export default function HojeContent() {
     return (
         <HojeContainer>
             <HojeHeader
-            isColored={(percentual > 0)}>
+                isColored={(percentual > 0)}>
                 <h2 data-test="today">{gerarDataHoje()}</h2>
                 <h3 data-test="today-counter">{(percentual > 0) ? `${percentual}% dos hábitos concluídos` : "Nenhum hábito concluído ainda"}</h3>
             </HojeHeader>
-            <HojeCards setHabitosConcluidos={setHabitosConcluidos} habitosHoje={habitosHoje} />
+            {isLoading ? <ThreeDots /> : <HojeCards setHabitosConcluidos={setHabitosConcluidos} habitosHoje={habitosHoje} />}
         </HojeContainer>
     )
 }
