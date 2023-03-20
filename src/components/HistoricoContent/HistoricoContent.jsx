@@ -55,7 +55,22 @@ export default function HistoricoContent() {
         setDatasIncompletas(incompleteDates);
     }
 
-    function tileContent({ date, view }) {
+    // function tileContent({ date, view }) {
+    //     const formattedDate = date.toLocaleDateString();
+    //     let className = '';
+
+    //     if (view === 'month') {
+    //         if (datasCompletas.includes(formattedDate)) {
+    //             className = 'completed';
+    //         } else if (datasIncompletas.includes(formattedDate)) {
+    //             className = 'incomplete';
+    //         }
+    //     }
+
+    //     return <TiledDiv iscomplete={className} className={`tile ${className}`}></TiledDiv>;
+    // };
+
+    function tileClassName({ date, view }) {
         const formattedDate = date.toLocaleDateString();
         let className = '';
 
@@ -67,20 +82,19 @@ export default function HistoricoContent() {
             }
         }
 
-        return <TiledDiv iscomplete={className} className={`tile ${className}`}></TiledDiv>;
+        return className;
     };
 
     return (
         <HistoricoContainer>
             <h1>Histórico</h1>
-            <Calendar tileContent={tileContent} onChange={onChange} value={value} />
+            <Calendar tileClassName={tileClassName} onChange={onChange} value={value} />
         </HistoricoContainer>
     )
 
 }
 
 const TiledDiv = styled.div`
-    
     ${(props) => {
         if (props.iscomplete === "incomplete") {
             return "background-color: #ea5766;"
@@ -107,5 +121,27 @@ const HistoricoContainer = styled.div`
         letter-spacing: 0em;
         text-align: left;
         width: 90%;
+    }
+    .react-calendar {
+        border: none;
+        margin-top: 11px;
+        border-radius: 10px;
+    }
+    .react-calendar__navigation span{
+        font-family: Lexend Deca;
+        font-size: 15px;
+    }
+    .react-calendar__month-view__days abbr{
+        font-family: Lexend Deca;
+    }
+    .react-calendar .incomplete {
+        border: 4px solid #ffffff;
+        background-color: #ea5766;
+        border-radius: 50%;
+    }
+    .react-calendar .completed {
+        border: 4px solid #ffffff;
+        background-color: #8cc654;
+        border-radius: 50%;
     }
 `

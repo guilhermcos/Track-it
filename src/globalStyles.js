@@ -56,6 +56,8 @@ body {
     background-color: #F2F2F2;
     overflow-x: hidden;
 }
+.react-calendar button {
+}
 `;
 
 export default GlobalStyle;
