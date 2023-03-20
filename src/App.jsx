@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Habitos from "./pages/Habitos";
 import Hoje from "./pages/Hoje";
+import Historico from "./pages/Historico";
 import GlobalStyle from "./globalStyles";
 import { useState, createContext, useEffect } from "react";
 export const LoginContext = createContext();
@@ -23,6 +24,7 @@ export default function App() {
               <Route path="/cadastro" element={<Cadastro />} />
               <Route path="/habitos" element={<Habitos />} />
               <Route path="/hoje" element={<Hoje />} />
+              <Route path="/historico" element={<Historico />}></Route>
             </Routes>
           </BrowserRouter>
         </LoginContext.Provider>

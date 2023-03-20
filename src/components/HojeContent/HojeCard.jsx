@@ -116,6 +116,7 @@ const StyledHojeCard = styled.div`
         letter-spacing: 0em;
         text-align: left;
     }
+
     button {
         border: none;
         position: absolute;
@@ -129,6 +130,7 @@ const StyledHojeCard = styled.div`
         width: 69px;
         border-radius: 5px;
     }
+    
     .current {
         color: ${(props) => props.isDone ? "#8FC549" : "#666666"};
     }

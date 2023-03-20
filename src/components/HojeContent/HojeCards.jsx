@@ -24,5 +24,6 @@ const StyledHojeCards = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 120px;
 `
 
