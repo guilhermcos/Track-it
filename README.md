@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+![Trackit-gif1](https://user-images.githubusercontent.com/120587680/236309983-39c08189-0c15-4046-8e7a-0326b66899fd.gif)
+![Trackit-gif2](https://user-images.githubusercontent.com/120587680/236309998-048c92c3-a87f-4b00-be4b-59854c64744c.gif)
+![Trackit-gif3](https://user-images.githubusercontent.com/120587680/236310012-8d12001f-dd93-43d0-8e69-5823bec47be7.gif)
+![Trackit-gif4](https://user-images.githubusercontent.com/120587680/236310028-e1294238-644b-4b7f-baae-8596da64aac4.gif)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Introduction
 
-## Available Scripts
+This is a habits control project developed with React JS. It allows the user to register and login to track their daily habits, register new habits, check daily and historical habits, among other functionalities.
 
-In the project directory, you can run:
+## Deploy
+You can test the app here: https://projeto11-trackit-coral-theta.vercel.app/
 
-### `npm start`
+## Functionalities
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Login Screen 
+on this screen, it is possible to log in by entering the registered email and password, and upon success, the user is redirected to the `/today` route. In case of failure, an alert message is displayed.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Register Screen
+on this screen, it is possible to register a new user by entering their information. After completing the registration, the user is redirected to the login screen.
 
-### `npm test`
+### Top and Menu
+the top and menu of the application have a fixed position and allow access to the habits, today and history functionalities. In addition, the circular progress bar indicates the percentage of completion of the day's habits.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Habits Screen
+on this screen, it is possible to view the habits registered by the user, delete habits, register new habits, and select the days of the week for each habit.
 
-### `npm run build`
+### Today Screen
+on this screen, it is possible to view the habits of the day and mark as completed those that have already been performed.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How to use
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone this repository on your local machine.
+2. Run the command `npm install` to install the dependencies.
+3. Run the command `npm start` to run the application in development mode.
+4. Access the application at `http://localhost:3000` in your browser.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies used
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- React JS
+- Styled Components
+- HTMl
+- CSS
